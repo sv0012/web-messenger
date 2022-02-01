@@ -10,7 +10,9 @@ const Header = (props) => {
     return (
         <header className="header">
             <div style= {{display:'flex'}}>
+                <Link to='/'>
                 <div className="logo">Web Messenger</div>
+                </Link>
                 {
                     !auth.authenticated ?  <ul className="leftMenu">
                     <li><NavLink to={'/login'}>Login</NavLink></li>

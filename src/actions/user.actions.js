@@ -64,14 +64,7 @@ export const getRealtimeConversations = (user) => {
                     conversations.push(doc.data())
                 }
 
-                // if(conversations.length > 0){
-                   
-                // } else {
-                //     dispatch({
-                //         type : `${userConstants.GET_REALTIME_MESSAGES}_FAILURE`,
-                //         payload : { conversations }
-                //     })
-                // }
+               
 
 
             });
