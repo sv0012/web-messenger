@@ -1,3 +1,4 @@
+import { firestore } from 'firebase';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRealtimeConversations, getRealtimeUsers, updateMessage } from '../../actions';
@@ -30,13 +31,16 @@ const [userUid, setUserUid] = useState(null);
 let unsubscribe;
 
     useEffect(() => {
-        unsubscribe = dispatch(getRealtimeUsers(auth.uid))
+        if(auth.uid){
+            unsubscribe = dispatch(getRealtimeUsers(auth.uid))
         .then(unsubscribe => {
           return unsubscribe;
         })
         .catch(error => {
           console.log(error);
         })
+        }      
+
     }, [])
 //console.log(user);
 

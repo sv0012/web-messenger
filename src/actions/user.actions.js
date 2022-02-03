@@ -51,7 +51,7 @@ export const updateMessage = (msgObj) => {
 export const getRealtimeConversations = (user) => {
     return async dispatch => {
         const db=firestore();
-        db.collection('conversations')
+         db.collection('conversations')
         .where('user_uid_1','in',[user.uid_1,user.uid_2])
         .orderBy('createdAt','asc')
         .onSnapshot((querySnapshot)=>{
@@ -72,7 +72,9 @@ export const getRealtimeConversations = (user) => {
                 type: userConstants.GET_REALTIME_MESSAGES,
                 payload : { conversations }
             })
-            console.log(conversations)
+            
         })
+        
     }
 }
+

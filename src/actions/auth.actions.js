@@ -5,7 +5,7 @@ import { authConstant } from './constants';
 
 export const signup = (user) => {
 
-    return (dispatch) => {
+    return async (dispatch) => {
         
         const db = firestore();
         dispatch({
@@ -63,47 +63,45 @@ export const signup = (user) => {
 }
 
 export const signin = (user) => {
-    return async dispatch => {
-        dispatch({type :`${authConstant.USER_LOGIN}_REQUEST` });
+    return async (dispatch) => {
+        dispatch({ type: `${authConstant.USER_LOGIN}_REQUEST` });
         auth()
-        .signInWithEmailAndPassword(user.email,user.password)
-        .then((data)=> {
-            console.log(data)
-            const db=firestore();
-            db.collection('users')
-            .doc(data.user.uid)
-            .update({
-                isOnline : true
+        .signInWithEmailAndPassword(user.email, user.password)
+        .then((data) => {
+            console.log(data);
+           
+                const name = data.user.displayName.split(" ");
+                const firstName = name[0];
+                const lastName = name[1];
+
+                const loggedInUser = {
+                    firstName,
+                    lastName,
+                    uid: data.user.uid,
+                    email: data.user.email
+                }
+
+                localStorage.setItem('user', JSON.stringify(loggedInUser));
+
+                dispatch({
+                    type: `${authConstant.USER_LOGIN}_SUCCESS`,
+                    payload: { user: loggedInUser }
+                });
+                if(loggedInUser) {
+                    const db=firestore();
+                    db.collection('users')
+                    .doc(data.user.uid)
+                    .update({
+                        isOnline : true
+                    })
+                }
             })
-            .then(()=>{
-                const name=data.user.displayName.split(" ");
-            const firstName=name[0];
-            const lastName=name[1];
-            const loggedInUser = {
-                firstName,
-                lastName,
-                uid : data.user.uid,
-                email : user.email
-            }
-
-            localStorage.setItem('user',JSON.stringify(loggedInUser));
-            dispatch({
-                type:`${authConstant.USER_LOGIN}_SUCCESS`,
-                payload: {user:loggedInUser}
-            });
-
-
-            }).catch(error=>{
-                console.log(error)
-            })
-            
-        })
-        .catch(error=>{
+        .catch(error => {
             console.log(error);
             dispatch({
-                type:`${authConstant.USER_LOGIN}_FAILURE`,
+                type: `${authConstant.USER_LOGIN}_FAILURE`,
                 payload: { error }
-            });
+            })
         })
     }
 }
@@ -145,6 +143,7 @@ export const logout = (uid) => {
             dispatch({
                 type:`${authConstant.USER_LOGOUT}_SUCCESS`       
             });
+            window.location.reload();
 
         })
         .catch(error=>{
