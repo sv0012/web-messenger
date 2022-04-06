@@ -39,7 +39,7 @@ const RegisterPage = (props) => {
                         <input name="lastName" type="text" value={lastName} onChange={(e)=>setLastName(e.target.value)} placeholder="Last Name" />
                         <input name="email" type="text" value={email} onChange={(e)=>setEmail(e.target.value)} placeholder="Email" />
                         <input name="password" type="password" value={password} onChange={(e)=>setPassword(e.target.value)} placeholder="Password" />
-                        <div>
+                        <div className='btn'>
                             <button>Sign up</button>
                         </div>
 

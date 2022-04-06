@@ -2,5 +2,5 @@
     width: 100%;
     border: 1px solid #eee;
     background: #fff;
-    box-shadow: 0 0 5px 1px #ccc;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }

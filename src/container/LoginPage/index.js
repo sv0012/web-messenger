@@ -28,6 +28,11 @@ const LoginPage = (props) => {
 
     }
 
+    const handleCredentials = () => {
+        setEmail('sailesh@gmail.com')
+        setPassword('123456')
+    }
+
     if(auth.authenticated) {
         return <Redirect to={"/"} />
     }
@@ -43,7 +48,9 @@ const LoginPage = (props) => {
                         <div className='btn'>
                             <button>Login</button>
                         </div>
-                        
+                        <div className='btn'>
+                            <button onClick={handleCredentials}>Use Login Credentials</button>
+                        </div>
                     
                     </form>
                 </Card>
